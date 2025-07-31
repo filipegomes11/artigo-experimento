@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stress-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: stress
+        image: progrium/stress
+        command: ["stress"]
+        args: ["--cpu", "2", "--timeout", "20s"]
+      restartPolicy: Never
+  backoffLimit: 2
