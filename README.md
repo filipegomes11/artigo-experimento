@@ -1,6 +1,6 @@
 # k8s-slo-resilience-lab
 
-Repositório para experimentos de resiliência em Kubernetes orientados a SLOs.
+Experimentos de resiliência em Kubernetes orientados a SLOs.
 Testado em Linux/WSL2 com Minikube (driver docker).
 
 ## Estrutura
