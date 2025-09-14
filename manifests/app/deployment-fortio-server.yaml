@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortio-server
+  namespace: app
+  labels:
+    app: fortio-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fortio-server
+  template:
+    metadata:
+      labels:
+        app: fortio-server
+    spec:
+      priorityClassName: tier-1-critical
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: hw
+              operator: NotIn
+              values:
+              - legacy
+      containers:
+      - name: fortio-server
+        image: fortio/fortio:latest
+        args: ["server", "--http-port", "8080", "--grpc-port", "8079", "--metrics-port", "9999"]
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 9999
+          name: metrics
+        readinessProbe:
+          httpGet:
+            path: /fortio/
+            port: http
+        livenessProbe:
+          httpGet:
+            path: /fortio/
+            port: http
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        # tolerations:
+        # - key: "hw"
+        #   operator: "Equal"
+        #   value: "legacy"
+        #   effect: "NoSchedule"

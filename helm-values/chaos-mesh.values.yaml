@@ -1,0 +1,5 @@
+installCRDs: true
+controllerManager:
+  replicaCount: 1
+dashboard:
+  enabled: false

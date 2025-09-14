@@ -1,0 +1,22 @@
+{
+  "title": "SLO Overview",
+  "uid": "slo-overview",
+  "schemaVersion": 16,
+  "version": 1,
+  "panels": [
+    {
+      "title": "p95 Latency",
+      "type": "graph",
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job=\"fortio-server\"}[5m])) by (le))"}
+      ]
+    },
+    {
+      "title": "HTTP 5xx rate",
+      "type": "graph",
+      "targets": [
+        {"expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m]))"}
+      ]
+    }
+  ]
+}
