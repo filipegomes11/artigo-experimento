@@ -1,0 +1,17 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: tier-1-critical
+value: 100000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: "Workloads críticos"
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: tier-2-default
+value: 1000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: true
+description: "Prioridade padrão"

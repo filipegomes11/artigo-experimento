@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortio-client
+  namespace: app
+  labels:
+    app: fortio-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fortio-client
+  template:
+    metadata:
+      labels:
+        app: fortio-client
+    spec:
+      priorityClassName: tier-2-default
+      containers:
+      - name: fortio-client
+        image: fortio/fortio:latest
+        args: ["load", "-c", "2", "-qps", "200", "-t", "25m", "http://fortio-server:8080"]
+        ports:
+        - containerPort: 9999
+          name: metrics

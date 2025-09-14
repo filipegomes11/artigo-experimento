@@ -1,0 +1,8 @@
+spec:
+  template:
+    spec:
+      tolerations:
+      - key: "hw"
+        operator: "Equal"
+        value: "legacy"
+        effect: "NoSchedule"

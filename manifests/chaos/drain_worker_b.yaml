@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: drain-worker-b
+  namespace: chaos-mesh
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          kubectl drain worker-b --ignore-daemonsets --delete-emptydir-data --force
+          sleep 60
+          kubectl uncordon worker-b
